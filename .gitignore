@@ -5,6 +5,7 @@
 *.jks
 *.keystore
 *.log
+*.swp
 .DS_Store
 .cxx/
 .externalNativeBuild/
