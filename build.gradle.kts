@@ -1,7 +1,10 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     id("maven-publish")
+    id("org.jetbrains.dokka").version("2.2.0")
 }
 
 android {
@@ -17,14 +20,28 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = "11"
+    publishing {
+        singleVariant("release") {}
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_11
     }
 }
 
 dependencies {
     implementation(libs.androidx.core.ktx)
+    implementation(libs.kotlin.csv)
     implementation(libs.opencv.android.ximgproc)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+}
+
+tasks.withType<Test> {
+    // Mocking library introduced an annoying compiler warning, this silences it for now
+    jvmArgs("-XX:+EnableDynamicAgentLoading")
 }
 
 afterEvaluate {
@@ -34,7 +51,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "de.vinzentrittel.sayplay"
                 artifactId = "detector"
-                version = "0.0.4"
+                version = "0.0.5"
             }
         }
         repositories {

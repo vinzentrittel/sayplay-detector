@@ -2,13 +2,12 @@ package de.vinzentrittel.detector
 
 import android.graphics.Bitmap
 import androidx.core.graphics.createBitmap
+import de.vinzentrittel.detector.internal.extractParameters
+import de.vinzentrittel.detector.internal.extractRectangle
+import org.opencv.android.OpenCVLoader
 import org.opencv.android.Utils
 import org.opencv.core.Mat
 import org.opencv.core.Size
-
-import de.vinzentrittel.detector.internal.extractRectangle
-import de.vinzentrittel.detector.internal.extractParameters
-import org.opencv.android.OpenCVLoader
 
 fun initializeDetector() {
     OpenCVLoader.initLocal()
